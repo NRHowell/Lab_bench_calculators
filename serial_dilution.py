@@ -18,9 +18,10 @@ How to use:
 import serial_dilution as sd
 sd.dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority)
 
-Author: Nicholas Howell nrhowell@gmail.com
 """
 from pandas import DataFrame as df
+import toml
+plate_data = toml.load('plate-data.toml')
 
 def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
     def data_test():
@@ -35,6 +36,7 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
             dil = n/DilF
             n = dil
             conc_list.append(dil)
+
             if len(conc_list) == steps:
                 break
         return conc_list
@@ -61,7 +63,7 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
     def collumn_priority():
         """Formats the dilution series based on collumn priority i.e A1,B1,C1..."""
         val = []
-        row = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+        row = plate_data['plate'][str(plate)]
         collumn = 1
         x = 0
         r = row[x]
@@ -69,28 +71,28 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
             r = row[x]
             x = x+1
             location = (r, collumn)
-            if x == 8:
+            if x == len(row):
                 x = 0
                 collumn = collumn+rep
             val.append(location)
-            if len(val) > (plate-1):
-                return "error: available wells exceeded"
+            #if plate_data['plate']['num'][str(plate)] >= collumn+1:
+                #return "error: available wells exceeded"
         return val
     def row_priority():
         """Formats the dilution series based on row priority i.e A1,A2,A3..."""
         val = []
-        row = ['A','B','C','D','E','F','G','H']
+        row = plate_data['plate'][str(plate)]
         collumn = 1
         x = 0
         for location in range(steps):
             r = row[x]
-            location = (r,collumn)
+            location = (r, collumn)
             collumn = collumn + rep
-            if collumn > 12:
+            if collumn > plate_data['plate']['num'][str(plate)]:
                 x = x+1
                 collumn = 1
             val.append(location)
-            if len(val) > (plate-1):
+            if collumn >= plate_data['plate']['num'][str(plate)]:
                 return "error: available wells exceeded"
         return val
     def data_output():
@@ -109,4 +111,8 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
         serial_dilution = df(dictionaries)
         return serial_dilution
     return data_output()
-#%%
+#
+# Author:
+# Nicholas Howell
+# nrhowell@gmail.com
+#

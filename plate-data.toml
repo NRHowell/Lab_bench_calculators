@@ -1,0 +1,16 @@
+#Data for constructing layouts of standard assay plates 6, 12, 24, 48, 96 and 384 well
+#Author: Nicholas Howell
+
+
+plate.6 = ['A','B']
+plate.12 = ['A','B','C']
+plate.24 = ['A','B','C','D']
+plate.48 = ['A','B','C','D','E','F']
+plate.96 = ['A','B','C','D','E','F','G','H']
+plate.384 = ['A','B','C','D','E','F','G','H','I','J','L','M','N','O','P','Q']
+plate.num.6 = 3
+plate.num.12 = 4
+plate.num.24 = 6
+plate.num.48 = 8
+plate.num.96 = 12
+plate.num.384 = 24
