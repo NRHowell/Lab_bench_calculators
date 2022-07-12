@@ -15,7 +15,7 @@ vol_units = the units of volume (e.g. 'ul', 'ml')
 priority = 'row' or 'collumn
 
 How to use:
-Script calls on addition data located in 'plate_data.toml'
+Script calls on addition data located in 'plate-data.toml'
 
 import serial_dilution as sd
 sd.dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority)
