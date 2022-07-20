@@ -23,45 +23,51 @@ sd.dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority)
 """
 from pandas import DataFrame as df
 import toml
+
 plate_data = toml.load('plate-data.toml')
 
-def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
+
+def dilution_series(SC, DilF, steps, vol, rep, plate, conc_units, vol_units, priority):
     def data_test():
         """sanity check the basic data"""
-        if steps*rep > plate:
-            return print("Error: Maximum wells available is ",plate,". Review the number of steps or reps required")
+        if steps * rep > plate:
+            return print("Error: Maximum wells available is ", plate, ". Review the number of steps or reps required")
+
     def d_s():
         """The actual dilution series"""
         n = SC
-        conc_list=[SC]
+        conc_list = [SC]
         for dil in conc_list:
-            dil = n/DilF
+            dil = n / DilF
             n = dil
             conc_list.append(dil)
 
             if len(conc_list) == steps:
                 break
         return conc_list
+
     def volumes():
         """Calculates the volume of the compound required from the stock solution or the previous dilution"""
         x = vol
-        vol_list = [x/DilF]
+        vol_list = [x / DilF]
         for volume in vol_list:
-            volume = x/DilF
+            volume = x / DilF
             vol_list.append(volume)
             if len(vol_list) == steps:
                 break
         return vol_list
+
     def final_volumes():
         """Calculates the volume of diluent required to achieve the desired concentration"""
         y = vol
-        fvol_list = [vol-(y/DilF)]
+        fvol_list = [vol - (y / DilF)]
         for fvol in fvol_list:
-            fvol = y-y/DilF
+            fvol = y - y / DilF
             fvol_list.append(fvol)
             if len(fvol_list) == steps:
                 break
         return fvol_list
+
     def collumn_priority():
         """Formats the dilution series based on collumn priority i.e A1,B1,C1..."""
         val = []
@@ -71,15 +77,16 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
         r = row[x]
         for location in range(steps):
             r = row[x]
-            x = x+1
+            x = x + 1
             location = (r, collumn)
             if x == len(row):
                 x = 0
-                collumn = collumn+rep
+                collumn = collumn + rep
             val.append(location)
-            #if plate_data['plate']['num'][str(plate)] >= collumn+1:
-                #return "error: available wells exceeded"
+            # if plate_data['plate']['num'][str(plate)] >= collumn+1:
+            # return "error: available wells exceeded"
         return val
+
     def row_priority():
         """Formats the dilution series based on row priority i.e A1,A2,A3..."""
         val = []
@@ -91,12 +98,13 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
             location = (r, collumn)
             collumn = collumn + rep
             if collumn > plate_data['plate']['num'][str(plate)]:
-                x = x+1
+                x = x + 1
                 collumn = 1
             val.append(location)
             if collumn >= plate_data['plate']['num'][str(plate)]:
                 return "error: available wells exceeded"
         return val
+
     def data_output():
         """
         Assemble the dilution series!!!
@@ -109,11 +117,20 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
         else:
             return print('error, choose "row or "collumn" priority')
 
-        dictionaries = {'Sample':range(1,(steps+1)),'Location':loc, 'Dilution series':d_s(), conc_units:conc_units, 'Compound volume':volumes(), 'Diluent volume':final_volumes(), vol_units:vol_units }
+        dictionaries = {'Sample': range(1, (steps + 1)), 'Location': loc, 'Dilution series': d_s(),
+                        conc_units: conc_units, 'Compound volume': volumes(), 'Diluent volume': final_volumes(),
+                        vol_units: vol_units}
         serial_dilution = df(dictionaries)
         return serial_dilution
+
     return data_output()
-#
+
+
+
+
+
+
+
 # Author:
 # Nicholas Howell
 # nrhowell@gmail.com
