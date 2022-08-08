@@ -10,6 +10,9 @@ Modules and notebooks available:
               - Takes halflife and isoptope data from https://radioactivedecay.github.io/
               
 
-These are all personal coding projects I have started in order to learn more about coding in general.
-I'll continue to add too
+These are all personal projects I have started in order to learn more about coding and computing in general.
+I'll continue to add tools I make, and that I find useful, as I complete them.
+
 All feedback and suggestions are welcome. 
+
+Thanks!
