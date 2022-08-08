@@ -52,7 +52,7 @@ def dilution_series(SC,DilF,steps,vol,rep,plate,conc_units,vol_units,priority):
     def data_test():
         """sanity check the basic data"""
         if steps*rep > plate:
-            return print("Error: Maximum wells available is ",plate,". Review the number of steps or reps required")
+            return print(f"Error: Maximum wells available is {plate}. Review the number of steps or reps required")
     def d_s():
         """The actual dilution series"""
         n = SC
@@ -177,7 +177,7 @@ def stock_solution(test,units):
         result = conc(mass,MW,vol)
 
     else:print("Choose to return the 'volume', 'mass' or 'molarity'")
-    print(result,units)
+    print(f"{result}{units}")
     return result
 
 def stock_dilution(stock_concentration, first_dilution, volume, units):
@@ -192,7 +192,7 @@ def stock_dilution(stock_concentration, first_dilution, volume, units):
     
     vol_stock = (first_dilution/stock_concentration)*volume
     vol_diluent = volume - vol_stock
-    print (vol_stock,units,'of stock solution +', vol_diluent,units,'of dilutent')
+    print (f"{vol_stock}{units} of stock solution + {vol_diluent}{units} of dilutent")
     return vol_stock
     
 
