@@ -9,6 +9,7 @@ Modules and notebooks available:
  - Rad Calcs! - A Jupyter notebook to assist with calculating the decay, specific activity and concentration of radioactive solutions.
               - Takes halflife and isoptope data from https://radioactivedecay.github.io/
               
+ - Cell Doubling Time. Module - for determing doubling time, projecting cell growth or predicting cell numbers of populations of cells undertaking exponential growth.   
 
 These are all personal projects I have started in order to learn more about coding and computing in general.
 I'll continue to add tools I make, and that I find useful, as I complete them.
