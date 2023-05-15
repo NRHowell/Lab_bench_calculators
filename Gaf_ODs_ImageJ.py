@@ -17,7 +17,7 @@ def OD(file,max_trans):
     data['%T'] = (data['Mean']/max_trans)*100 #calculate %T from pixel values
     data['OD']= 2-n.log10(data['%T']) #convert %T into OD
     data.to_csv(f'{file}_OD_{date.today()}.csv')
-    #return(data)
+    #return(data)  #unhash this and # the above line if you would like the data 'returned' rather than 'saved'
 
 
 def optical_density(input_path, output_path, maximum_transmission):
