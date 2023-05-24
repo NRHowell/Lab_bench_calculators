@@ -26,7 +26,7 @@ def optical_density(input_path, output_path, maximum_transmission):
 
     tiff_array = imageio.imread(input_path) #read the image file
     trans_array = (tiff_array/maximum_transmission)*100 #calculate % trasmission
-    OD_array = 2-n.log10(trans_array)  #calculate the optical densities
+    OD_array = 2-np.log10(trans_array)  #calculate the optical densities
     imageio.imwrite(output_path, OD_array) #write the array to a new image file
     print("TIFF image file saved to", output_path)
 
